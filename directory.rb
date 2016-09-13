@@ -17,9 +17,15 @@ puts "--------------"
 end
 
 def print(students)
-  students.each do |student|
-  puts "#{student[:name]} (#{student[:cohort]} cohort)"
-end
+  lookup_value = 0
+  while lookup_value < students.length do
+    student = students[lookup_value]
+    if student[:name].start_with?("p", "P") && if student[:name].length < 12
+        puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      end
+    end
+    lookup_value += 1
+  end
 end
 
 def print_footer(names)
