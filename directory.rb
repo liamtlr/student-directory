@@ -22,8 +22,8 @@ def input_students
     while !name.empty? do
       puts "Please enter the student's country of birth"
       country = gets.chomp
-      if country == ""
-        country = "Unknown"
+      if country == ''
+        country = 'Unknown'
       end
       puts 'Please enter their date of birth in the format DD/MM/YYYY'
       d_o_b = gets.chomp
@@ -48,84 +48,74 @@ def input_students
   students
 end
 
+def print_from_input(input_arr)
+  line_width = 50
+  lookup_value = 0
+  while lookup_value < input_arr.length
+    student = input_arr[lookup_value]
+    if student[:name].start_with?("d", "D") && if student[:name].length < 17
+      puts ("#{student[:name]} (#{student[:cohort]} cohort)".center(line_width))
+      puts ("Country of origin: #{student[:country]}".center(line_width))
+      puts ("Date of birth: #{student[:d_o_b]}".center(line_width))
+    end
+  end
+    lookup_value = lookup_value + 1
+  end
+end
+
 def print_header
   line_width = 50
   puts ("The students of Villains Academy".center(line_width))
   puts ("--------------".center(line_width))
 end
 
-def print_by_cohort(students_fixed)
-line_width = 50
 
-  students_fixed = [
-    {name: "Dr. Hannibal Lecter", cohort: :november, country: "USA"},
-    {name: "Darth Vader", cohort: :september, country: "Russia"},
-    {name: "Nurse Ratched", cohort: :may, country: "Germany"},
-    {name: "Michael Corleone", cohort: :may, country: "Suriname"},
-    {name: "Alex DeLarge", cohort: :may, country: "Germany"},
-    {name: "The Wicked Witch of the West", cohort: :september, country: "Austria"},
-    {name: "Terminator", cohort: :november, country: "Latvia"},
-    {name: "Freddy Krueger", cohort: :november, country: "Lithuania"},
-    {name: "The Joker", cohort: :september, country: "Spain"},
-    {name: "Joffrey Baratheon", cohort: :may, country: "Portugal"},
-    {name: "Norman Bates", cohort: :november, country: "Canada"},
-  ]
-
-cohort_may = students_fixed.select{ |x| x[:cohort] == :may}
-cohort_sept = students_fixed.select{ |x| x[:cohort] == :september}
-cohort_nov = students_fixed.select{ |x| x[:cohort] == :november}
-
-puts ("May cohort:".center(line_width))
-puts
-cohort_may.each do |x|
-  puts ("Name: #{x[:name]}".center(line_width))
-  puts ("Country of origin: #{x[:country]}".center(line_width))
-  puts
-end
-puts ("September cohort:".center(line_width))
-puts
-cohort_sept.each do |x|
-  puts ("Name: #{x[:name]}".center(line_width))
-  puts ("Country of origin: #{x[:country]}".center(line_width))
-  puts
-end
-puts ("November cohort:".center(line_width))
-puts
-cohort_nov.each do |x|
-  puts ("Name: #{x[:name]}".center(line_width))
-  puts ("Country of origin: #{x[:country]}".center(line_width))
-  puts
-end
-end
-
-def print(students)
+def print(input_arr)
+  line_width = 50
   lookup_value = 0
-  while lookup_value < students.length do
-    student = students[lookup_value]
-    if student[:name].start_with?("p", "P") && if student[:name].length < 12
-      line_width = 50
+  while lookup_value < input_arr.length
+    student = input_arr[lookup_value]
+    if student[:name].start_with?("d", "D") && if student[:name].length < 17
       puts ("#{student[:name]} (#{student[:cohort]} cohort).".center(line_width))
-      puts ("DOB: #{student[:d_o_b]}".center(line_width))
       puts ("Country of origin: #{student[:country]}".center(line_width))
     end
   end
-    lookup_value += 1
+    lookup_value = lookup_value + 1
+  end
+end
+
+
+
+def print_by_cohort(input_arr)
+  line_width = 50
+  cohorts = [:may, :september, :november]
+  cohorts_string = ["May", "September", "November"]
+  lookup = 0
+  while lookup < cohorts.length
+    single_cohort = input_arr.select{ |x| x[:cohort] == cohorts[lookup]}
+    puts ("#{cohorts_string[lookup]} cohort:".center(line_width))
+    single_cohort.each do |x|
+      puts ("Name: #{x[:name]}".center(line_width))
+      puts ("Country of origin: #{x[:country]}".center(line_width))
+      puts
+    end
+    lookup = lookup + 1
   end
 end
 
 def print_footer(names)
-  line_width = 50
-if names.count == 1
-  puts ("Overall, we have #{names.count} great student".center(line_width))
-else
-  puts ("Overall, we have #{names.count} great students".center(line_width))
-end
-end
+   line_width = 50
+   if names.count == 1
+     puts ("Overall, we have #{names.count} great student".center(line_width))
+   else
+     puts ("Overall, we have #{names.count} great students".center(line_width))
+   end
+ end
 
+# print_by_cohort(students_fixed)
+# print(students_fixed)
 
-# students = input_students
-# print_header
-# print(students)
-# print_footer(students)
-
-print_by_cohort(students_fixed)
+students = input_students
+print_header
+print_from_input(students)
+print_footer(students)
