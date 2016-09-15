@@ -118,6 +118,7 @@ def print_menu
   puts "What would you like to do?"
   puts "To input students, press 1"
   puts "To see the list of students, press 2"
+  puts "To save the list of students to and output file, press 3"
   puts "To exit, press 9"
 end
 
@@ -142,11 +143,23 @@ def process(selection)
     print_header
     print_from_input(@students)
     print_footer(@students)
+  when "3"
+    save_students
   when "9"
     exit
   else
     puts "I don't know what you mean, try again"
   end
+end
+
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:country], student[:d_o_b], student[:cohort]]
+    csv_line = student_data.join(", ")
+    file.puts csv_line
+  end
+  file.close
 end
 
 interactive_menu
