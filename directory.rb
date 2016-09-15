@@ -51,14 +51,12 @@ end
 def print_from_input(input_arr)
   line_width = 50
   lookup_value = 0
+  puts input_arr.length
   while lookup_value < input_arr.length
     student = input_arr[lookup_value]
-    if student[:name].start_with?("d", "D") && if student[:name].length < 17
       puts ("#{student[:name]} (#{student[:cohort]} cohort)".center(line_width))
       puts ("Country of origin: #{student[:country]}".center(line_width))
       puts ("Date of birth: #{student[:d_o_b]}".center(line_width))
-    end
-  end
     lookup_value = lookup_value + 1
   end
 end
@@ -112,10 +110,38 @@ def print_footer(names)
    end
  end
 
+# ----------
+
+def interactive_menu
+  students = []
+  loop do
+    puts "What would you like to do?"
+    puts "To input students, press 1"
+    puts "To see the list of students, press 2"
+    puts "To exit, press 9"
+    selection = gets.chomp
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print_from_input(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+    end
+  end
+end
+
+interactive_menu
+
+
 # print_by_cohort(students_fixed)
 # print(students_fixed)
 
-students = input_students
-print_header
-print_from_input(students)
-print_footer(students)
+# students = input_students
+# print_header
+# print_from_input(students)
+# print_footer(students)
