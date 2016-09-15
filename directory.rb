@@ -51,12 +51,12 @@ end
 def print_from_input(input_arr)
   line_width = 50
   lookup_value = 0
-  puts input_arr.length
   while lookup_value < input_arr.length
     student = input_arr[lookup_value]
       puts ("#{student[:name]} (#{student[:cohort]} cohort)".center(line_width))
       puts ("Country of origin: #{student[:country]}".center(line_width))
       puts ("Date of birth: #{student[:d_o_b]}".center(line_width))
+      puts
     lookup_value = lookup_value + 1
   end
 end
@@ -65,6 +65,7 @@ def print_header
   line_width = 50
   puts ("The students of Villains Academy".center(line_width))
   puts ("--------------".center(line_width))
+  puts
 end
 
 
@@ -111,27 +112,40 @@ def print_footer(names)
  end
 
 # ----------
+@students =[]
+
+def print_menu
+  puts "What would you like to do?"
+  puts "To input students, press 1"
+  puts "To see the list of students, press 2"
+  puts "To exit, press 9"
+end
+
+def show_students
+  print_header
+  print_from_input(@students)
+  print_footer(students)
+end
 
 def interactive_menu
-  students = []
   loop do
-    puts "What would you like to do?"
-    puts "To input students, press 1"
-    puts "To see the list of students, press 2"
-    puts "To exit, press 9"
-    selection = gets.chomp
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print_from_input(students)
-      print_footer(students)
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean, try again"
-    end
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def process(selection)
+  case selection
+  when "1"
+    @students = input_students
+  when "2"
+    print_header
+    print_from_input(@students)
+    print_footer(@students)
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean, try again"
   end
 end
 
