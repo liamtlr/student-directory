@@ -117,8 +117,9 @@ def print_footer(names)
 def print_menu
   puts "What would you like to do?"
   puts "To input students, press 1"
-  puts "To see the list of students, press 2"
+  puts "To view the list of students, press 2"
   puts "To save the list of students to and output file, press 3"
+  puts "To load the current list of students, press 4"
   puts "To exit, press 9"
 end
 
@@ -145,6 +146,8 @@ def process(selection)
     print_footer(@students)
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
@@ -160,6 +163,16 @@ def save_students
     file.puts csv_line
   end
   file.close
+end
+
+def load_students
+  file = File.open("students.csv", 'r')
+  file.readlines.each do |lines|
+    name, country, d_o_b, cohort = lines.split(", ")
+    @students << {name: name, country: country, d_o_b: d_o_b, cohort: cohort}
+  end
+  file.close
+  puts @students
 end
 
 interactive_menu
