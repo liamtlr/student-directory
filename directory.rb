@@ -14,6 +14,7 @@ students_fixed = [
 
 def input_students
   students = []
+  puts @students
   puts "Please enter the students' details. To finish, just hit return twice."
   puts "Enter name"
   name = STDIN.gets.chomp
@@ -35,11 +36,12 @@ def input_students
       if cohort == ""
         cohort = 'Unknown'
       end
-      students << {name: name, cohort: cohort, country: country, d_o_b: d_o_b}
+      load_array(name, country, d_o_b, cohort)
       if students.count == 1
         puts "Now we have #{students.count} student"
       else
       puts "Now we have #{students.count} students"
+      puts @students
     end
       puts "Please enter the name of the next student. If you're finished, hit Enter."
       name = STDIN.gets.chomp
@@ -139,7 +141,7 @@ end
 def process(selection)
   case selection
   when "1"
-    @students = input_students
+    input_students
   when "2"
     print_header
     print_from_input(@students)
@@ -169,10 +171,9 @@ def load_students(filename = "students.csv")
   file = File.open(filename, 'r')
   file.readlines.each do |lines|
     name, country, d_o_b, cohort = lines.split(", ")
-    @students << {name: name, country: country, d_o_b: d_o_b, cohort: cohort}
+    load_array(name, country, d_o_b, cohort)
   end
   file.close
-  puts @students
 end
 
 def try_load_students
@@ -186,6 +187,11 @@ def try_load_students
     exit
   end
 end
+
+def load_array (name, country, d_o_b, cohort)
+  @students << {name: name, country: country, d_o_b: d_o_b, cohort: cohort}
+end
+
 
 try_load_students
 interactive_menu
